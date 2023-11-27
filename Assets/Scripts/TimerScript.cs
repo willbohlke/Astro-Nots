@@ -5,28 +5,42 @@ using UnityEngine.UI;
 
 public class TimerScript : MonoBehaviour
 {
-    public float timeValue = 3.99f;
+    public float timeValue = 0f;
     public Text timeText;
+    public bool countdownFinished = false;
+
+    private bool activateTimer = false;
+    
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        StartCountdown();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (timeValue > 0) {
+        if (activateTimer && timeValue > 1) {
             timeValue -= Time.deltaTime;
             DisplayTime(timeValue);
         } else {
-            timeValue = 0;
             timeText.text = "Go!";
+            timeValue = 0;
+            countdownFinished = true;
+            activateTimer = false;
         }
 
-        
-        
+
+    }
+
+    public bool GetCountdownFinished() {
+        return countdownFinished;
+    }
+
+    void StartCountdown() {
+        activateTimer = true;
+        timeValue = 3.99f;
     }
 
     void DisplayTime(float timeToDisplay) {
@@ -38,6 +52,6 @@ public class TimerScript : MonoBehaviour
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
         float milliseconds = (timeToDisplay % 1) * 1000;
 
-        timeText.text = string.Format("{0:00}:{1:00}", seconds, milliseconds);
+        timeText.text = string.Format("{0:0}", seconds);
     }
 }
