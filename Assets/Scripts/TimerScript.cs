@@ -26,6 +26,7 @@ public class TimerScript : MonoBehaviour
             DisplayTime(timeValue);
         } else {
             timeText.text = "Go!";
+            StartCoroutine(DisappearAfterDelay());
             timeValue = 0;
             countdownFinished = true;
             activateTimer = false;
@@ -53,5 +54,10 @@ public class TimerScript : MonoBehaviour
         float milliseconds = (timeToDisplay % 1) * 1000;
 
         timeText.text = string.Format("{0:0}", seconds);
+    }
+
+    IEnumerator DisappearAfterDelay() {
+        yield return new WaitForSeconds(1f);
+        timeText.enabled = false;
     }
 }
