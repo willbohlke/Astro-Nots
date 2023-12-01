@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float thrustForce = 1.25f;
-    public float gravityMultiplier = 2.0f;
+    public float thrustForce = 1.75f;
+    public float gravityMultiplier = 0.0f;
     public float timeValue = 0f;
     public bool isOnGround = false;
     public bool countdownFinished = false;
@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
         isOnGround = false;
         playerRb = GetComponent<Rigidbody>();
         playerAnim = GetComponent<Animator>();
+        gravityMultiplier = UnityEngine.Random.Range(0.25f, 1.0f);
         Physics.gravity *= gravityMultiplier;
         StartCoroutine(CountdownRoutine());
         playerRb.useGravity = false;
@@ -38,7 +39,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Thrusting: " + thrusting);
+        //Debug.Log("Thrusting: " + thrusting);
         
         if (countdownFinished) {
             playerRb.useGravity = true;
