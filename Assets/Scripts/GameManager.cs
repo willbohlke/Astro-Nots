@@ -175,7 +175,7 @@ public class GameManager : MonoBehaviour
         }
         else if (finalTime < 2.0f && finalTime > -2.0f)
         {
-            timerText.color = Color.white;
+            timerText.color = Color.gray;
             //Debug.Log("Avg score!");
         }
         else

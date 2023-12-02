@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,14 +25,21 @@ public class TimerScript : MonoBehaviour
         if (activateTimer && timeValue > 1) {
             timeValue -= Time.deltaTime;
             DisplayTime(timeValue);
-        } else {
-            timeText.text = "Go!";
-            timeValue = 0;
+        } else if (activateTimer && timeValue < 1) {
+            timeText.text = "Go!!!";
             countdownFinished = true;
             activateTimer = false;
+            
+        } else {
+            StartCoroutine(ClearTextAfterDelay(1.0f));
         }
 
 
+    }
+
+    IEnumerator ClearTextAfterDelay(float delay) {
+        yield return new WaitForSeconds(delay);
+        timeText.text = "";
     }
 
     public bool GetCountdownFinished() {

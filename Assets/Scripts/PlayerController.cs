@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float thrustForce = 1.75f;
+    
     public float gravityMultiplier = 0.0f;
     public float timeValue = 0f;
     public bool isOnGround = false;
@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem JetPackThrust;
 
     private Vector3 startPos;
+    public float thrustForce;
     private Rigidbody playerRb;
     private float yBound = 25.0f;
     private Animator playerAnim;
@@ -22,6 +23,8 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+        thrustForce = 8.0f;
         isOnGround = false;
         playerRb = GetComponent<Rigidbody>();
         playerAnim = GetComponent<Animator>();
@@ -42,6 +45,7 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("Thrusting: " + thrusting);
         
         if (countdownFinished) {
+            playerRb.mass = 1.00f;
             playerRb.useGravity = true;
         }
 
@@ -50,7 +54,7 @@ public class PlayerController : MonoBehaviour
         // make player thrust upward if up arrow is pressed and they havent touched the ground yet
             
             if (Input.GetKey(KeyCode.UpArrow) && countdownFinished && !isOnGround) {
-                playerRb.AddForce(Vector3.up * thrustForce * verticalInput);
+                playerRb.AddForce(thrustForce * verticalInput * Vector3.up);
                 thrusting = true;
                 //Debug.Log("Thrusting!");
             } else {
